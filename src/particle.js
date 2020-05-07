@@ -1,6 +1,7 @@
 import { Utils } from './util';
 
 const mouse = {};
+const colors = ['#607D8B', '#FFF3E0', '#0097A7'];
 
 window.addEventListener('mousemove', function (event) {
   mouse.x = event.clientX;
@@ -9,51 +10,40 @@ window.addEventListener('mousemove', function (event) {
 
 export class Particle {
   constructor(x, y) {
-    this.canvas = canvas;
+    this.canvas = document.querySelector('#canvas');
     this.ctx = canvas.getContext("2d");
-    this.color = '#645f5a';
-    this.x = this.canvas.width + Math.random();
-    this.y = this.canvas.height + Math.random();
-    this.dest = {
-      x: x,
-      y: y
-    }
-    this.radius = Math.random() * 2.5 + 1;
-    this.vx = (Math.random() - 0.5) * 20;
-    this.vy = (Math.random() - 0.5) * 20;
-    this.friction = Math.random() * 0.05 + 0.94;
+    this.color = Utils.randomColor(colors);
+    this.x = Math.random() * this.canvas.width;
+    this.y = Math.random() * this.canvas.height;
+    this.radius = Math.random() * 10 + 10;
     this.ax = 0;
     this.ay = 0;
-  }
-  update() {
-    this.ax = (this.dest.x - this.x) / 100;
-    this.ay = (this.dest.x - this.y) / 100;
-    this.vx += this.ax;
-    this.vy += this.ay;
-    this.vx *= this.friction;
-    this.vy *= this.friction;
-
-    this.x += this.vx;
-    this.y += this.vy;
-    if (this.dist < this.radius * 30) {
-      this.vx += this.ax * mouse.x / 10;
-      this.vy += this.ay * mouse.y / 10;
+    this.friction = Math.random() * 0.05 + 0.94;
+    this.dest = {
+      x: x,
+      y: y,
     }
   }
+  update() {
+    this.ax = (this.dest.x - this.x) / 30;
+    this.ay = (this.dest.y - this.y) / 30;
+    this.x += this.ax;
+    this.y += this.ay;
+  }
   draw() {
+    this.ctx.save();
     this.ctx.beginPath();
     this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
     this.ctx.fillStyle = this.color;
-    if (this.dist < this.radius * 30) {
+    if (this.dist < this.radius * 10) {
       this.ctx.fillStyle = '#87d7f2';
     }
+    this.ctx.globalAlpha = .8;
     this.ctx.fill()
+    this.ctx.restore();
   }
   resize() {
-    this.distancex = Utils.randomDist(this.canvas.width / 12, this.canvas.width / 6 + 150, 2);
-    this.distancey = Utils.randomDist(this.canvas.height / 12, this.canvas.height / 1.8 + 200, 6);
-  }
-  mousemove() {
-    this.dist = Utils.distanceXY(this.x, this.y, mouse.x, mouse.y);
+    this.x = this.x;
+    this.y = this.y;
   }
 }

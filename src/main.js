@@ -11,13 +11,19 @@ import { Utils } from './util';
     window.onresize = () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+        for (let i = 0; i < amount; i++) {
+            let p = particles[i];
+            p.pop();
+        }
+        init();
     }
 
     const offscreencanvas = document.createElement('canvas'),
         offscreenctx = offscreencanvas.getContext('2d'),
         canvas = document.querySelector('#canvas'),
         ctx = canvas.getContext('2d');
-    var p, particles = [], amount = 0;
+
+    let amount = 0, particles = [];
 
     function init() {
 
@@ -59,7 +65,7 @@ import { Utils } from './util';
     function render() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         for (let i = 0; i < amount; i++) {
-            p = particles[i];
+            let p = particles[i];
             p.update();
             p.draw();
         }

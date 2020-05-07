@@ -11,10 +11,7 @@ import { Utils } from './util';
     window.onresize = () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        for (let i = 0; i < amount; i++) {
-            let p = particles[i];
-            p.pop();
-        }
+        particles = [];
         init();
     }
 
@@ -51,7 +48,7 @@ import { Utils } from './util';
         canvas.width = WIDTH;
         canvas.height = HEIGHT;
 
-        const skip = 100;
+        const skip = 120;
         for (let x = 0; x < WIDTH; x += Math.round(WIDTH / skip)) {
             for (let y = 0; y < HEIGHT; y += Math.round(WIDTH / skip)) {
                 if (imgData[((x + y * WIDTH) * 4) + 3] > skip) {
@@ -64,6 +61,8 @@ import { Utils } from './util';
 
     function render() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // ctx.fillStyle = 'hsla(260,40%,5%,.2)';
+        // ctx.fillRect(0, 0, canvas.width, canvas.height);
         for (let i = 0; i < amount; i++) {
             let p = particles[i];
             p.update();

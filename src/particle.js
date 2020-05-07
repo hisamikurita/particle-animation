@@ -1,7 +1,8 @@
 import { Utils } from './util';
 
 const mouse = {};
-const colors = ['#607D8B', '#FFF3E0', '#0097A7'];
+// const colors = ['#607D8B', '#FFF3E0', '#0097A7'];
+const colors = ['#645f5a'];
 
 window.addEventListener('mousemove', function (event) {
   mouse.x = event.clientX;
@@ -15,7 +16,7 @@ export class Particle {
     this.color = Utils.randomColor(colors);
     this.x = Math.random() * this.canvas.width;
     this.y = Math.random() * this.canvas.height;
-    this.radius = Math.random() * 10 + 10;
+    this.radius = Math.random() * 5 + 2;
     this.ax = 0;
     this.ay = 0;
     this.friction = Math.random() * 0.05 + 0.94;
@@ -35,15 +36,12 @@ export class Particle {
     this.ctx.beginPath();
     this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
     this.ctx.fillStyle = this.color;
-    if (this.dist < this.radius * 10) {
-      this.ctx.fillStyle = '#87d7f2';
-    }
-    this.ctx.globalAlpha = .8;
+    // this.ctx.shadowColor = this.color;
+    // this.ctx.shadowBlur = 4;
+    // this.ctx.shadowOffsetX = 0;
+    // this.ctx.shadowOffsetY = 0;
+    // this.ctx.globalAlpha = .8;
     this.ctx.fill()
     this.ctx.restore();
-  }
-  resize() {
-    this.x = this.x;
-    this.y = this.y;
   }
 }

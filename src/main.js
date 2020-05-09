@@ -5,7 +5,12 @@ import { Utils } from './util';
 
     window.addEventListener('load', function () {
         init();
-        render();
+        // render01();
+        render01();
+        setInterval(function () {
+            cancelAnimationFrame(render01);
+            render03();
+        }, 3000);
     })
 
     window.onresize = () => {
@@ -59,15 +64,31 @@ import { Utils } from './util';
         amount = particles.length;
     }
 
-    function render() {
+    function render01() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        // ctx.fillStyle = 'hsla(260,40%,5%,.2)';
-        // ctx.fillRect(0, 0, canvas.width, canvas.height);
         for (let i = 0; i < amount; i++) {
             let p = particles[i];
-            p.update();
+            p.load();
             p.draw();
         }
-        requestAnimationFrame(render);
+        requestAnimationFrame(render01);
+    }
+    // function render02() {
+    //     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //     for (let i = 0; i < amount; i++) {
+    //         let p = particles[i];
+    //         p.circle();
+    //         p.draw();
+    //     }
+    //     requestAnimationFrame(render02);
+    // }
+    function render03() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < amount; i++) {
+            let p = particles[i];
+            p.font();
+            p.draw();
+        }
+        requestAnimationFrame(render03);
     }
 })();

@@ -1,7 +1,6 @@
 import { Utils } from './util';
 
 const mouse = {};
-// const colors = ['#607D8B', '#FFF3E0', '#0097A7'];
 const colors = ['#645f5a'];
 
 window.addEventListener('mousemove', function (event) {
@@ -70,9 +69,6 @@ export class Particle {
     this.ctx.beginPath();
     this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
     this.ctx.fillStyle = this.color;
-    if (this.dist < this.radius * 20) {
-      this.ctx.fillStyle = '#b4410c';
-    }
     this.ctx.fill()
     this.ctx.restore();
   }

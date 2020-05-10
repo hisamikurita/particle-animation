@@ -21,8 +21,10 @@ export class Particle {
     this.radius = Math.random() * 2.5 + 1;
     this.vx = 0;
     this.vy = 0;
+    this.vx2 = 0;
+    this.vy2 = 0;
     this.friction = Math.random() * 0.05 + 0.94;
-    this.speed = 30;
+    this.speed = 20;
     this.angle = Math.PI * 2 * Math.random();
     this.rotationSpeed = Math.random() * .001 + .0015;
     this.distancex = Utils.randomDist(this.canvas.width / 12, this.canvas.width / 6 + 120, 2);
@@ -32,6 +34,8 @@ export class Particle {
     this.rotationSpeed = Math.random() * .001 + .0015;
     this.x4 = x;
     this.y4 = y;
+    this.ax = (Math.random() - 0.5) * 10;
+    this.ay = (Math.random() - 0.5) * 10;
   }
   load() {
     this.vx = (this.x2 - this.x) / this.speed;
@@ -39,15 +43,22 @@ export class Particle {
     this.x += this.vx;
     this.y += this.vy;
   }
-  // circle() {
-  //   this.angle += this.rotationSpeed;
-  //   this.vx = (this.x3 - this.x) / this.speed;
-  //   this.vy = (this.y3 - this.y) / this.speed;
-  //   this.x += this.vx;
-  //   this.y += this.vy;
-  //   this.x3 = Math.cos(this.angle) * this.distancex + this.canvas.width / 2;
-  //   this.y3 = Math.sin(this.angle) * this.distancey + this.canvas.height / 2;
-  // }
+  circle() {
+    this.dist = Utils.distanceXY(this.x, this.y, mouse.x, mouse.y);
+    this.angle += this.rotationSpeed;
+    this.vx = (this.x3 - this.x) / this.speed;
+    this.vy = (this.y3 - this.y) / this.speed;
+    this.x += this.vx;
+    this.y += this.vy;
+    this.x3 = Math.cos(this.angle) * this.distancex + this.canvas.width / 2 + this.vx2;
+    this.y3 = Math.sin(this.angle) * this.distancey + this.canvas.height / 2 + this.vy2;
+    this.vx2 *= this.friction;
+    this.vy2 *= this.friction;
+    if (this.dist < this.radius * 20) {
+      this.vx2 += this.ax * mouse.x;
+      this.vy2 += this.ay * mouse.y;
+    }
+  }
   font() {
     this.vx = (this.x4 - this.x) / this.speed;
     this.vy = (this.y4 - this.y) / this.speed;
@@ -59,6 +70,9 @@ export class Particle {
     this.ctx.beginPath();
     this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
     this.ctx.fillStyle = this.color;
+    if (this.dist < this.radius * 20) {
+      this.ctx.fillStyle = '#b4410c';
+    }
     this.ctx.fill()
     this.ctx.restore();
   }

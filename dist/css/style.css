@@ -1,12 +1,19 @@
-html, body {
-    height: 100%;
+* {
     margin: 0;
-    overflow: hidden;
-    width: 100%;
+    padding: 0;
 }
 
-body{
+html, body {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    position: relative;
     background-color: #101010;
+    color: #fff;
+    font-family: Arial, sans-serif;
 }
 
 #wrap {
@@ -18,4 +25,131 @@ canvas {
     display: block;
     width: 100%;
     height: 100%;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    letter-spacing: .05em;
+    font-size: 28px;
+    animation: zoomIn 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes zoomIn {
+    0% {
+        transform: scale3d(0, 0, 1);
+    }
+    100% {
+        transform: scale3d(1, 1, 1);
+    }
+}
+
+p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    letter-spacing: .05em;
+    font-size: 28px;
+    animation: shake 2s linear infinite;
+    opacity: 0;
+}
+
+@keyframes shake {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    5% {
+        transform: translate3d(-10px, 10px, 0);
+    }
+    10% {
+        transform: translate3d(10px, -10px, 0);
+    }
+    15% {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    font-size: 30px;
+    opacity: 0;
+    animation: fadeIn 3s ease-in-out 10s forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+li {
+    list-style: none;
+}
+
+li:not(:first-of-type) {
+    margin: 0 18px 0 0;
+}
+
+a {
+    color: #fff;
+}
+
+.img {
+    position: relative;
+}
+
+.img::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -32px;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    width: 6px;
+    height: 6px;
+    vertical-align: middle;
+    border-top: 2px solid #fff;
+    border-right: 2px solid #fff;
+    transform: rotate(45deg);
+}
+
+.clip {
+    width: 40px;
+    margin: 0 34px 0 0;
+    clip-path: circle(18px at center);
+}
+
+img {
+    max-width: 100%;
+    width: 100%;
+    vertical-align: middle;
 }

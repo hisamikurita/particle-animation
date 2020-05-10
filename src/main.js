@@ -5,12 +5,18 @@ import { Utils } from './util';
 
     window.addEventListener('load', function () {
         init();
-        // render01();
         render01();
-        setInterval(function () {
-            cancelAnimationFrame(render01);
-            render03();
+        setTimeout(function () {
+            cancelAnimationFrame(frame01);
+            title.style.opacity = 0;
+            text.style.opacity = 1;
+            render02();
         }, 3000);
+        setTimeout(function () {
+            cancelAnimationFrame(frame02);
+            text.style.opacity = 0;
+            render03();
+        }, 10000);
     })
 
     window.onresize = () => {
@@ -23,9 +29,15 @@ import { Utils } from './util';
     const offscreencanvas = document.createElement('canvas'),
         offscreenctx = offscreencanvas.getContext('2d'),
         canvas = document.querySelector('#canvas'),
-        ctx = canvas.getContext('2d');
+        ctx = canvas.getContext('2d'),
+        body = document.querySelector('body'),
+        title = document.querySelector('h1'),
+        text = document.querySelector('p');
 
-    let amount = 0, particles = [];
+
+    body.classList.add('active');
+
+    let amount = 0, particles = [], frame01 = 0, frame02 = 0;
 
     function init() {
 
@@ -47,13 +59,13 @@ import { Utils } from './util';
         offscreenctx.font = "bold " + (WIDTH / 8) + "px arial";
         offscreenctx.textAlign = 'center';
         offscreenctx.baseline = 'middle';
-        offscreenctx.fillText('Hello World !!', WIDTH / 2, HEIGHT / 2);
+        offscreenctx.fillText("Follow me !!", WIDTH / 2, HEIGHT / 2);
         const imgData = offscreenctx.getImageData(0, 0, WIDTH, HEIGHT).data;
 
         canvas.width = WIDTH;
         canvas.height = HEIGHT;
 
-        const skip = 120;
+        const skip = 150;
         for (let x = 0; x < WIDTH; x += Math.round(WIDTH / skip)) {
             for (let y = 0; y < HEIGHT; y += Math.round(WIDTH / skip)) {
                 if (imgData[((x + y * WIDTH) * 4) + 3] > skip) {
@@ -71,17 +83,17 @@ import { Utils } from './util';
             p.load();
             p.draw();
         }
-        requestAnimationFrame(render01);
+        frame01 = requestAnimationFrame(render01);
     }
-    // function render02() {
-    //     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //     for (let i = 0; i < amount; i++) {
-    //         let p = particles[i];
-    //         p.circle();
-    //         p.draw();
-    //     }
-    //     requestAnimationFrame(render02);
-    // }
+    function render02() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < amount; i++) {
+            let p = particles[i];
+            p.circle();
+            p.draw();
+        }
+        frame02 = requestAnimationFrame(render02);
+    }
     function render03() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         for (let i = 0; i < amount; i++) {
